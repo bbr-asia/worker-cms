@@ -1,4 +1,4 @@
-name = "worker-cms"
+name = "shipment-admin-hk"
 main = "src/index.ts"
 compatibility_date = "2026-07-14"
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
@@ -27,20 +27,20 @@ binding = "CF_VERSION_METADATA"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "cms"
-database_id = "036882b7-c7d1-4163-9a40-cba28bc87233"
+database_name = "shipment-hk"
+database_id = "faeec955-82bd-44e1-aa51-3ba4f8dcd75c"
 migrations_dir = "migrations"
 
 [[d1_databases]]
 binding = "PUBLISHED_DB"
-database_name = "cms-published"
+database_name = "shipment-published-hk"
 # Replace with the id from `wrangler d1 create cms-published`.
-database_id = "94cc01db-8028-48eb-923f-e440423aeb3f"
+database_id = "1efd0ad5-25ea-4f79-8de8-2924330b6887"
 migrations_dir = "migrations/published"
 
 [[r2_buckets]]
 binding = "MEDIA_BUCKET"
-bucket_name = "worker-cms-media"
+bucket_name = "shipment-media"
 
 # Powers the /media-preview/* thumbnails. Works on workers.dev - no zone or
 # custom domain needed. Remove the binding to serve full-size originals instead.
@@ -86,9 +86,9 @@ new_sqlite_classes = ["FormOnceDO"]
 # Create the queue once before deploying: wrangler queues create cms-admin-jobs
 [[queues.producers]]
 binding = "ADMIN_JOBS_QUEUE"
-queue = "cms-admin-jobs"
+queue = "shipment-admin-hk-jobs"
 [[queues.consumers]]
-queue = "cms-admin-jobs"
+queue = "shipment-admin-hk-jobs"
 # One job-batch (<=100 pages) per invocation so each gets a fresh subrequest
 # budget; batching several messages together would reintroduce the cap blowout.
 max_batch_size = 1
@@ -120,18 +120,18 @@ simple = { limit = 30, period = 60 }
 # and do not need to be listed here.
 # PUBLISH_TARGETS = "d1,r2"
 # Comma-separated list of enabled OAuth providers: "github", "google", "microsoft", "apple", "eventuai"
-ENABLED_PROVIDERS = "eventuai,github,google,microsoft,apple"
+ENABLED_PROVIDERS = "github,google,microsoft"
 # Per-provider OAuth client IDs – add the ones you use
 EVENTUAI_CLIENT_ID = "RnFAoAkXz1JLwaKx"
-GITHUB_CLIENT_ID = "Ov23lis6jG7x2nBmbFM1"
-GOOGLE_CLIENT_ID = "314543822201-i1n5al6ddo2afmuait7d2hormpgv3pue.apps.googleusercontent.com"
-MICROSOFT_CLIENT_ID = "768c819f-4981-420d-a0d6-529fd0b8642f"
-MICROSOFT_TENANT = "common"
-APPLE_CLIENT_ID = "com.eventuai.cms"
+GITHUB_CLIENT_ID = "Ov23liSDpbfi4F1d1TL3"
+GOOGLE_CLIENT_ID = "314543822201-lt3m247r3s1dg81m18ss71upgf65td3n.apps.googleusercontent.com"
+MICROSOFT_CLIENT_ID = "eb505a15-25df-4828-a69c-ffd149183dbf"
+MICROSOFT_TENANT = "49b2bbef-148b-4a0f-972a-14506f047765"
+# APPLE_CLIENT_ID = ""
 # Shared redirect URI – registered with every enabled provider
-OAUTH_REDIRECT_URI = "https://cms.eventuai.com/auth/callback"
-CANONICAL_ORIGIN = "https://cms.eventuai.com"
-SITE_TITLE = "0xCMS.service"
+OAUTH_REDIRECT_URI = "https://shipment-admin-hk.bbr-asia.workers.dev/auth/callback"
+CANONICAL_ORIGIN = "https://shipment-admin-hk.bbr-asia.workers.dev"
+SITE_TITLE = "0xCMS"
 # Default timezone applied to a page's start/end window when none is set.
 # UTC offset (e.g. "+0800") or an IANA name (e.g. "Asia/Hong_Kong").
 DEFAULT_TIMEZONE = "+0800"
